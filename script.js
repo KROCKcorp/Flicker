@@ -68,6 +68,7 @@ const clearBody = () => {
 const makeImages = async (videoslist, searchType) => {
   fill.classList.add('hide');
   videosPanel.classList.remove('hide');
+  let mediaType;
 
   for (let video of videoslist) {
     if (video.poster_path) {
@@ -78,8 +79,6 @@ const makeImages = async (videoslist, searchType) => {
       //creating the image
       const newImg = document.createElement('img');
       newImg.loading = 'eager';
-
-      let mediaType;
 
       if (searchType === 'movie') {
         mediaType = 'Movie';
@@ -100,10 +99,7 @@ const makeImages = async (videoslist, searchType) => {
         </div>
       `;
 
-      await new Promise((resolve) => {
-        newImg.onload = resolve;
-        newImg.src = `https://image.tmdb.org/t/p/w154/${video.poster_path}`;
-      });
+      newImg.src = `https://image.tmdb.org/t/p/w154/${video.poster_path}`;
 
       videoContainer.appendChild(newImg);
       videoContainer.appendChild(infoCard);
