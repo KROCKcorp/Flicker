@@ -48,6 +48,7 @@ async function fetchData(apiKey, query, searchType, page = 1) {
     };
 
     const apiResponse = await axios.get(url, config);
+    console.log(apiResponse);
 
     return apiResponse.data;
   } catch (err) {
@@ -64,7 +65,7 @@ const clearBody = () => {
   fill.classList.remove('hide');
 };
 
-const makeImages = async (videoslist) => {
+const makeImages = async (videoslist, searchType) => {
   fill.classList.add('hide');
   videosPanel.classList.remove('hide');
 
@@ -78,12 +79,25 @@ const makeImages = async (videoslist) => {
       const newImg = document.createElement('img');
       newImg.loading = 'eager';
 
+      let mediaType;
+
+      if (searchType === 'movie') {
+        mediaType = 'Movie';
+      } else if (searchType === 'tv') {
+        mediaType = 'TV Show';
+      } else if (searchType === 'multi') {
+        mediaType = video.media_type === 'tv' ? 'TV Show' : 'Movie';
+      }
+
       //create the card for the info
       const infoCard = document.createElement('div');
       infoCard.classList.add('info-card');
       infoCard.innerHTML = `
-        <p>${video.name || video.title}<p>
-        <p>Rating: ${video.vote_average.toFixed(1) || '0'} ⭐</p>
+        <p>${video.name || video.title}</p>
+        <div class="details">
+          <p>${video.vote_average.toFixed(1) || '0'} / 10</p>
+          <p>${mediaType}</p>
+        </div>
       `;
 
       await new Promise((resolve) => {
@@ -122,8 +136,7 @@ form.addEventListener('submit', async function (event) {
 
   if (response) {
     totalPages = response.total_pages;
-    console.log('Total Pages:', totalPages);
-    makeImages(response.results);
+    makeImages(response.results, selectedSearchType);
   }
 });
 
@@ -136,7 +149,6 @@ window.addEventListener('scroll', async function () {
   ) {
     isFetching = true;
     currentPage++;
-    console.log(currentPage);
 
     const apiKey = await loadKey(fileName);
     const response = await fetchData(
@@ -145,7 +157,7 @@ window.addEventListener('scroll', async function () {
       selectedSearchType,
       currentPage
     );
-    response && makeImages(response.results);
+    response && makeImages(response.results, selectedSearchType);
     isFetching = false;
   }
 });
