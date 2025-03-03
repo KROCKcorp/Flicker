@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <title>Flicker</title>
+    </head>
+
+    <header>
+        <div id="navbar">
+            <h1>Flick<span>er</span></h1>
+
+            <form id="searchForm">
+                <input type="text" placeholder="Title" name="query" autocomplete="off">
+                <button>Search</button>
+            </form>
+        </div>
+    </header>
+
+    <body>
+
+        <div class="toggle-container">
+            <input type="checkbox" id="movies" class="toggle-input" checked>
+            <label for="movies" class="toggle-label">Movies</label>
+
+            <input type="checkbox" id="tv-shows" class="toggle-input">
+            <label for="tv-shows" class="toggle-label">TV Shows</label>
+        </div>
+
+        <div class="fill">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+
+        <div class="videos hide">
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="script.js"></script>
+    </body>
+
+    <footer></footer>
+
+</html>
