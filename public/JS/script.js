@@ -2,7 +2,6 @@ const logo = document.querySelector('h1');
 const form = document.querySelector('#searchForm');
 const videosPanel = document.querySelector('.videos');
 const fill = document.querySelector('.fill');
-const fileName = 'keys.json';
 
 let currentPage = 1;
 let totalPages = 1;
@@ -11,11 +10,11 @@ let isFetching = false;
 let selectedSearchType = '';
 
 //Input: API key's JSON file path, Output: API key
-async function loadKey(path) {
+async function loadKey() {
   try {
-    const keyResponse = await fetch(path);
-    const keyData = await keyResponse.json();
-    return keyData['API-Read-Access-Token'];
+    const response = await fetch('/api/key');
+    const data = await response.text();
+    return data;
   } catch (err) {
     throw new Error("Couldn't get the api key from the json", err);
   }
@@ -48,7 +47,6 @@ async function fetchData(apiKey, query, searchType, page = 1) {
     };
 
     const apiResponse = await axios.get(url, config);
-    console.log(apiResponse);
 
     return apiResponse.data;
   } catch (err) {
@@ -121,7 +119,7 @@ form.addEventListener('submit', async function (event) {
   currentPage = 1;
   totalPages = 1;
 
-  const apiKey = await loadKey(fileName);
+  const apiKey = await loadKey();
   selectedSearchType = getSearchType();
   const response = await fetchData(
     apiKey,
@@ -146,7 +144,7 @@ window.addEventListener('scroll', async function () {
     isFetching = true;
     currentPage++;
 
-    const apiKey = await loadKey(fileName);
+    const apiKey = await loadKey();
     const response = await fetchData(
       apiKey,
       currentQuery,
