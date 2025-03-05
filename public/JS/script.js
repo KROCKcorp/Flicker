@@ -107,7 +107,7 @@ const makeImages = async (videoslist, searchType) => {
 };
 
 logo.addEventListener('click', () => {
-  window.location.href = 'index.html';
+  window.location.href = '/';
 });
 
 form.addEventListener('submit', async function (event) {
